@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>User authentication</title>
+	</head>
+	<body>
+		<h1>User Authentication</h1>
+
+		<label for="username">Username</label>
+		<input type="text" id="username" name="username" />
+
+		<label for="password">Password</label>
+		<input type="password" id="password" name="password" />
+
+		<button id="loginBtn">Login</button>
+		<button id="registerBtn">Register</button>
+
+		<script>
+			const loginBtn = document.getElementById("loginBtn");
+			const registerBtn = document.getElementById("registerBtn");
+			const username = document.getElementById("username");
+			const password = document.getElementById("password");
+
+			loginBtn.addEventListener("click", async () => {
+				const result = await fetch("http://localhost:8080/auth/login", {
+					method: "POST",
+					headers: { "content-type": "application/json" },
+					body: JSON.stringify({
+						username: username.value,
+						password: password.value,
+					}),
+				});
+				const jsonResult = await result.json();
+				alert(JSON.stringify(jsonResult));
+			});
+
+			registerBtn.addEventListener("click", async () => {
+				const result = await fetch("http://localhost:8080/auth/register", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						username: username.value,
+						password: password.value,
+					}),
+				});
+				const jsonResult = await result.json();
+				alert(JSON.stringify(jsonResult));
+			});
+		</script>
+	</body>
+</html>
